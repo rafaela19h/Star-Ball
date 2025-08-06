@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAR BALL</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <!--bungee spice  / FONT---> 
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Audiowide&family=Bitcount+Grid+Single:wght@100..900&family=Bungee+Spice&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Imperial+Script&family=Inter:ital,opsz,wght@0,14..32,500;1,14..32,500&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Orbitron:wght@400..900&family=Play:wght@400;700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="imagex/png" href="./assets/cena-dude.png"/>
+
+    <!--CSS-->
+    <style type="text/css">
+        body {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgb(2, 129, 129);
+            background-image: url('./assets/cena.jpg') ;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #direitosAutorais {        
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            position: relative;
+            align-items: center;
+                    
+            #nomeDoJogo {
+                font-family: 'bungee spice';
+                font-size: 40px;
+                height:90px;
+                position: relative;
+                
+                h1{
+                    margin: 0;
+                    text-shadow: #000 2px 2px 3px;
+                }
+            }
+                            
+            #box-avisos{
+                display:flex;
+                gap: 100px;
+                font-size: 17px;
+                font-family: arial; 
+                margin-top: 35px;
+            }  
+                    
+            #direitosAutoraisPT, #direitosAutoraisENG {
+                background-color: rgba(255, 255, 255, 0.753);
+                border: 3px solid rgb(184, 123, 2);
+                width: 550px;
+                height: 550px;
+                border-radius: 20px;
+                padding: 0px 40px 0px 40px;
+            }
+            
+
+            #fecharAvisos {
+                position: relative;                                                           
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                height: 0px;
+                top: 100px;        
+            
+                button {                   
+                    width: 200px;
+                    height: 80px;  
+                    font-family: 'bungee spice';
+                    font-size: 25px;
+                    border:none;
+                    border-radius: 20PX;
+                    border-bottom: 2px solid rgb(1, 77, 7);  
+                    border-top: 3px solid rgba(95, 30, 0);  
+                    border-right: 2px solid rgba(1, 77, 7);  
+                    border-left: 3px solid rgba(95, 30, 0);
+                    cursor: pointer;
+                    transition: transform 0.3s ease, font-size 0.3s ease; 
+                    background: radial-gradient(rgb(59, 21, 2), rgb(191, 93, 8));
+                    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;        
+                }
+
+                span {
+                    text-decoration: overline;
+                }
+
+                button:hover {                 
+                    transform: scale(1.1);
+                }
+                                         
+            }
+        }    
+
+        /*Menu principal botões*/
+        #menusEBotoesPrincipais {
+            display: flex;       
+            align-items: center;
+            flex-direction: column;
+            height: fit-content;       
+            margin-top: 120px;          
+            justify-content: center; 
+
+            #botaoDeVoltar {        
+                display: none;
+                height: 8%;
+                width: 10%;
+                position: absolute;
+                top: 85%;
+                right: 43%;
+
+                #voltar {        
+                    width: 100px;
+                    height: 50px;
+                    font-size: 30px;
+                    margin: 0;
+                    text-align: center;  
+                }
+            }
+
+            #botaoDeVoltar input {
+                border-radius: 50%;
+                border-bottom-right-radius: none;
+                border-top-left-radius: none;
+            }
+
+            input {
+                display:flex;
+                margin: 20px;
+                width: 300px;
+                height: 100px;  
+                border-bottom: 2px solid rgb(1, 77, 7);  
+                border-top: 3px solid rgba(95, 30, 0);  
+                border-right: 2px solid rgba(1, 77, 7);  
+                border-left: 3px solid rgba(95, 30, 0); 
+                border-bottom-right-radius: 40px;
+                border-top-left-radius: 40px;
+                font-size: 40px;
+                font-family: 'bungee spice';      
+                cursor: pointer;
+                transition: transform 0.3s ease, font-size 0.3s ease;
+
+                background: radial-gradient(rgb(59, 21, 2), rgb(191, 93, 8));
+                box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+            }
+            
+            input:hover {                 
+                transform: scale(1.1);
+            }
+        }
+
+        #jogarMenu {
+            margin-top: 250px;
+
+            #nomeDoPlayer {
+                display: none;
+                width: 300px;
+                height: 70px;
+                font-size: 30PX;
+                padding-left: 20px; 
+                cursor: text;
+                transform: none;
+                outline: none; /* remove o contorno padão do navegador */
+            }
+
+            #jogarPasher {
+                display: none;
+                width: 200px;
+                height: 50px;
+                justify-content: center;
+                text-align: center;
+                align-items: center;   
+                font-size: 30px;        
+            }
+
+            input {
+                display:flex;
+                margin: 20px;
+                width: 300px;
+                height: 100px;  
+                border-bottom: 2px solid rgb(1, 77, 7);  
+                border-top: 3px solid rgba(95, 30, 0);  
+                border-right: 2px solid rgba(1, 77, 7);  
+                border-left: 3px solid rgba(95, 30, 0); 
+                border-bottom-right-radius: 40px;
+                border-top-left-radius: 40px;
+                font-size: 40px;
+                font-family: 'bungee spice';      
+                cursor: pointer;
+                transition: transform 0.3s ease, font-size 0.3s ease;
+
+                background: radial-gradient(rgb(59, 21, 2), rgb(191, 93, 8));
+                box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+            }
+            
+            input::placeholder {
+                color: rgb(163, 76, 14);
+                font-family: 'Arial';
+            }
+
+            input:hover {                 
+                transform: scale(1.1);
+            }
+        }       
+
+        #tutorialMenu {
+            display: none;
+            height: 98vh;
+            background-color: rgba(106, 106, 106, 0.254);
+        }
+
+        #sobreMenu {
+           display: none;
+      
+            #tituloText {
+                display: flex;
+                gap: 200px;  
+                justify-content: center;
+                font-size: 20px;
+                color: rgb(41, 41, 41);
+                text-shadow: #000 2px 2px 3px;
+
+                .textJogo{
+                    font-size: 30px;
+                    font-family: 'bungee spice';
+                }
+            }
+
+            #boxText {
+                display: flex;
+                gap: 80px;
+                font-family: Arial;         
+            }
+
+            #textBR, #textENG {
+                width: 600px;
+                height: 250px;
+                padding: 10px;
+                background-color: rgba(235, 235, 235, 0.753);
+                border: 3px solid rgb(184, 123, 2);
+                border-radius: 20px;
+            }
+
+            #textCreditos {
+                height: 200px;
+                font-size: 19px;
+                margin-top: 20px;
+                padding-bottom: 15px;
+                background-color: rgba(235, 235, 235, 0.753);
+                border: 3px solid rgb(184, 123, 2);
+                border-radius: 15px;
+
+                a {
+                   color: rgb(16, 17, 53);
+                   font-weight: bold;
+                   text-shadow: #000 1px;
+                }  
+
+                a:hover {
+                    color: rgba(117, 2, 2, 0.943);
+                }      
+            }
+
+            span {
+                font-size: 22px;  
+                text-shadow: #000000ce 1px 1px 1px;     
+            }
+        }
+
+        #visualizarAvisos {
+            display: none;
+            font-family: arial;
+            font-weight: bold;
+            height: 90px;
+            color: rgb(40, 39, 39);
+            position: fixed;
+            bottom: 25px;
+
+            button{
+                width: 65px;
+                height: 35px;
+                border-radius: 30px;
+                font-family:sans-serif;
+                font-weight: bold;
+                background: radial-gradient(rgb(156, 56, 6), rgb(191, 93, 8));
+                cursor: pointer;
+                transition: transform 0.3s ease, font-size 0.3s ease; 
+            }
+
+            button:hover {                 
+                transform: scale(1.1);
+            }
+        }
+
+    </style>
+
+</head>
+
+<body> <!--HTML-->
+    
+    <div id="menusEBotoesPrincipais" >
+        <!--Menus principal-->
+        <input type="button" id="jogar" value="JOGAR" onclick="jogarButton()" target="_blank">       
+        <input type="button" id="tutorial" value="TUTORIAL" onclick="tutorialButton()"> 
+        <input type="button" id="sobre" value="SOBRE" onclick="sobreButton()">
+
+        <div id="botaoDeVoltar">
+            <input type="button" id="voltar" value="&lt;" onclick="voltar()">
+        </div> 
+
+        <!--Botao para visualizar os DIREITOS AUTORAIS-->
+        <div id="visualizarAvisos">
+            <p>Aviso de direitos Autorais / Copyright Notice:</p>
+            <button onclick="avisosVisualizar()" >ver/see</button>
+        </div>
+    </div> 
+
+    <!--Menu "JOGAR"-->
+    <div id="jogarMenu">
+        <input type="text" id="nomeDoPlayer" placeholder="DIGITE SEU NOME" autocomplete="off" maxlength="8"> 
+        <input type="button" id="jogarPasher" onclick="jogar()" value="JOGAR">
+    </div>
+
+    <!--Menu "TUTORIAL"-->
+    <div id="tutorialMenu" >
+        <img src="./assets/tutorial.png" >
+    </div>
+
+    <!--Menu "SOBRE"-->
+    <div id="sobreMenu">
+        <div id="tituloText">
+        <h1>SOBRE</h1>
+        <h1 class="textJogo">STAR BALL</h1>
+        <h1>ABOUT</h1>
+        </div>
+
+        <div id="boxText">
+            <div id="textBR">
+                <p> <span>Sobre o Jogo</span> </p>
+                <p>
+                    Essa é a história do Dude, um personagem que atravessa diferentes mundos em busca de estrelas para alcançar a pontuação necessária. 
+                    Mas cuidado! Ele deve coletar as estrelas enquanto desvia de bombas perigosas para conseguir avançar para o próximo mundo.
+                </p>
+
+                <p> <span>Sobre Mim</span> </p>
+                <p>
+                    Sou uma desenvolvedora iniciante, começando minha jornada no mundo da programação e criação de jogos. Este projeto faz parte do meu 
+                    processo de aprendizagem, e compartilho com carinho tudo o que venho descobrindo.
+                </p>
+            </div>
+
+            <div id="textENG">
+                <p> <span>About the Game</span> </p>
+                <p>
+                    This is the story of Dude, a character on a journey through different worlds to collect stars and reach the required score. 
+                    But be careful! He must collect stars while avoiding dangerous bombs in order to move on to the next world.
+                </p>
+
+                <p> <span>About Me</span> </p>
+                <p>
+                    I'm a beginner developer just starting my journey into programming and game development. This project is part of my learning 
+                    process, and I’m happy to share what I’ve been creating along the way.
+                </p>
+            </div>
+        </div>
+
+        <div id="textCreditos">
+            <p> <span>Créditos / Credits</span> </p>
+            <p>
+                Este jogo foi desenvolvido com o auxílio da biblioteca <a href="https://phaser.io/" target="_blank">Phaser</a>, 
+                uma poderosa ferramenta para a criação de jogos em 2D. <br>
+                This game was developed using the <a href="https://phaser.io/" target="_blank">Phaser</a> 
+                library, a powerful tool for creating 2D games.
+            </p>
+                
+            <p>
+                Também recebi apoio e orientação do meu mentor <a href="https://www.linkedin.com/in/igorjrmedeiros/" target="_blank">Igor Medeiros</a>, 
+                cujo trabalho e dedicação foram essenciais para a realização deste projeto. <br>
+                I also received guidance and support from my mentor <a href="https://www.linkedin.com/in/igorjrmedeiros/" target="_blank">Igor Medeiros</a>, 
+                whose help was essential for completing this project.
+            </p>
+        </div>
+            
+        </div>
+    </div>
+
+    <!--Direitos Autorais-->
+    <div id="direitosAutorais">  
+        <div id="nomeDoJogo">
+            <h1> STAR BALL</h1>
+        </div>
+
+        <div id="fecharAvisos">
+            <img src="./assets/dude-aviso.png">             
+            <button onclick="avisosFecharClose()" > FECHAR <br> <span>CLOSE</span></button>
+        </div>
+
+        <div id="box-avisos">
+            <div id="direitosAutoraisPT">
+                <h1>Aviso de Direitos Autorais</h1>                       
+                <p>
+                    Este jogo foi desenvolvido unicamente para fins educativos e de aprendizado.
+                    Todos os assets visuais, sons e fontes utilizados foram coletados gratuitamente na internet por meio de buscas abertas (como Google, sites de recursos gratuitos etc), sem intenção de uso comercial ou monetização.
+                    Reconheço e respeito os direitos autorais dos criadores originais de cada recurso utilizado. Caso você seja autor de algum material incluído e deseje ser creditado(a) ou tenha objeção ao uso, entre em contato para que as devidas providências sejam tomadas.
+                    Nenhum valor foi, é ou será cobrado, comercializado ou monetizado com este projeto.
+                    Muito obrigado a todos os artistas, programadores e criadores que compartilham seu trabalho e ajudam a inspirar novos desenvolvedores!
+                </p>
+            </div>
+
+            <div id="direitosAutoraisENG" >
+                <h1> Copyright Notice </h1>
+                <p>
+                        This game was developed solely for educational and learning purposes.
+                        All visual assets, sounds, and fonts used were collected freely from the internet through open searches (such as Google or free asset websites), with no intention of commercial use or monetization.
+                        I fully respect and acknowledge the copyrights of the original creators of all materials used.
+                        If you are the author of any asset included in this project and would like to be credited or wish to request removal, please feel free to contact me so I can take appropriate action.
+                        No money has been, is, or will be earned, sold, or monetized through this project.
+                        A big thank you to all the artists, programmers, and creators who share their work and help inspire new developers!
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!--JAVASCRIPT-->
+    <script type="text/javascript">
+            document.getElementById('jogar').style.display = 'none';
+            document.getElementById('tutorial').style.display = 'none';
+            document.getElementById('sobre').style.display = 'none';
+            document.getElementById('visualizarAvisos').style.display = 'none';
+
+        function avisosFecharClose() {
+            document.getElementById('jogar').style.display = 'inline';
+            document.getElementById('tutorial').style.display = 'inline';
+            document.getElementById('sobre').style.display = 'inline';
+            document.getElementById('visualizarAvisos').style.display = 'inline';
+
+            document.getElementById('direitosAutorais').style.display = 'none';
+            document.getElementById('botaoDeVoltar').style.display = 'none';     
+        }
+
+        function avisosVisualizar() {
+            document.getElementById('direitosAutorais').style.display = 'flex';
+
+            document.getElementById('jogar').style.display = 'none';
+            document.getElementById('tutorial').style.display = 'none';
+            document.getElementById('sobre').style.display = 'none';
+            document.getElementById('visualizarAvisos').style.display = 'none';
+        }
+
+        function voltar() {
+            document.getElementById('jogar').style.display = 'inline'
+            document.getElementById('tutorial').style.display = 'inline'
+            document.getElementById('sobre').style.display = 'inline'
+            document.getElementById('visualizarAvisos').style.display = 'inline'
+
+            document.getElementById('nomeDoPlayer').style.display = 'none';
+            document.getElementById('jogarPasher').style.display = 'none';
+            document.getElementById('tutorialMenu').style.display = 'none';
+            document.getElementById('botaoDeVoltar').style.display = 'none';
+            document.getElementById('sobreMenu').style.display = 'none';
+        }
+
+        function tutorialButton() {
+            document.getElementById('tutorialMenu').style.display = 'inline'
+            document.getElementById('botaoDeVoltar').style.display = 'inline';
+
+            document.getElementById('jogar').style.display = 'none'
+            document.getElementById('tutorial').style.display = 'none'
+            document.getElementById('sobre').style.display = 'none'
+            document.getElementById('visualizarAvisos').style.display = 'none'
+        }
+
+        function sobreButton() {
+            document.getElementById('sobreMenu').style.display = 'block'; 
+            document.getElementById('botaoDeVoltar').style.display = 'inline';
+            
+            document.getElementById('visualizarAvisos').style.display = 'none'
+            document.getElementById('jogar').style.display = 'none'
+            document.getElementById('tutorial').style.display = 'none'
+            document.getElementById('sobre').style.display = 'none'
+        }
+
+        function jogarButton() {
+            document.getElementById('nomeDoPlayer').style.display = 'inline';
+            document.getElementById('jogarPasher').style.display = 'inline';
+            document.getElementById('botaoDeVoltar').style.display = 'inline';
+
+            document.getElementById('jogar').style.display = 'none'
+            document.getElementById('tutorial').style.display = 'none'
+            document.getElementById('sobre').style.display = 'none'
+            document.getElementById('visualizarAvisos').style.display = 'none'
+
+        }
+
+        function jogar() {
+            let nomeInserido = document.getElementById('nomeDoPlayer').value
+
+            if(nomeInserido == '' || nomeInserido == null) 
+            {
+                alert('Insira um nome / Enter a name' )
+               
+            } 
+            else 
+            {
+                document.getElementById('menusEBotoesPrincipais').style.display = 'none';
+                document.getElementById('nomeDoPlayer').style.display = 'none';
+                document.getElementById('jogarPasher').style.display = 'none';
+                document.getElementById('botaoDeVoltar').style.display = 'none';
+            
+                // TODO O JOGO
+                var config = {
+                    type: Phaser.AUTO,
+                    width: 800,
+                    height: 600,   
+                    
+                    //adiciona sistema de física arcade do Phaser, com isso elementos podem cair, pular, colidir, escorregar, etc.
+                    physics: {
+                        default: 'arcade',
+                        arcade: {
+                            gravity: { y: 1000 },
+                            debug: false
+                        }
+                    },
+                    scene: {
+                        //carrega imagens, sons, arquivos, antes do jogo começar
+                        preload: preload,
+                        //Monta a cena do jogo depois de tudo carregado
+                        create: create,
+                        //executa continuamente durante o jogo
+                        update: update
+                    }
+                };
+
+                var player;
+                var stars;
+                var platforms;
+                var cursors;
+
+                var score = 0 //pontuação zerada
+                var scoreText; //texto que aparece com valor da pontuação
+                var scoreTextObjective;
+
+                var bombs; // grupo que armazenará todas as bombas
+
+                var camera;
+
+                var namePlayer = document.getElementById('nomeDoPlayer').value;
+                var nameText;
+
+                var imageGameOver;
+                var gameOver = false; // indica se o jogo acabou
+
+                var fase = 0;
+
+                var game = new Phaser.Game(config); //Usa configurações que foi passado no config. Guarda o jogo inteiro
+
+                //Carrega todas as imagens que serão usadas.
+                function preload() {
+
+                    //O this dentro dessas funções representa a própria cena do jogo (em que você está mexendo).
+                    //Quer dizer ''Na CENA do jogo, carrega esta imagem''
+
+                    //Mapa Montanha
+                    this.load.image('montanha', 'assets/montanha.png'); 
+                    this.load.image('montanha-chao', 'assets/montanha-chao.png');           
+                    
+                    //Mapa noite
+                    this.load.image('noite', 'assets/noite.png');
+                    this.load.image('noite-chao', 'assets/noite-chao.png');
+                    this.load.image('noite-chao-pequeno', 'assets/noite-chao-pequeno.png');
+
+                    //Mapa deserto
+                    this.load.image('desertoD', 'assets/deserto.png');
+                    this.load.image('deserto-chao', 'assets/deserto-chao.png');
+                    this.load.image('deserto-chaozinho', 'assets/deserto-chao-pequeno.png');
+                    this.load.image('deserto-parede', 'assets/deserto-parede.png');
+
+                    //Mapa padrão
+                    this.load.image('sky', 'assets/sky.png');
+                    this.load.image('ground', 'assets/platform.png');
+
+                    //estrela, bomba, personagem
+                    this.load.image('star', 'assets/star.png');
+                    this.load.image('bomb', 'assets/bomb.png');
+                    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+                    //game Over
+                    this.load.image('over', 'assets/game-over.png');
+
+                    //reiniciar
+                    this.load.image('reiniciar', 'assets/reiniciar.png');
+
+                    //pause
+                    this.load.image('pausar', 'assets/pause.png');
+                    //menu do pause 
+                    this.load.image('menuCasa', 'assets/menuCasa.png');
+                    //despause
+                    this.load.image('despause', 'assets/despause.png');
+
+                    //menu fundo (pause))
+                    this.load.image('menuFundo', 'assets/menuFundo.png');
+                }
+
+                function mapaPadrao(scene) {
+                    
+                    scene.add.image(400, 300, 'sky');
+                    
+                    // Grupo de plataformas com física. Estáticas - nao se movem, ficam paradas esperando algo colidir com elas
+                    //staticGroup() - grupo de objetos fixos com física ativa
+                    platforms = scene.physics.add.staticGroup();
+
+                    //Chão do jogo
+                    //posição x, y, imagem(ground).
+                    // setScale(2) dobra o tamanho da imagem. 
+                    // .refreshBody() atualiza a física da imagem para novo tamanho. Sem isso, a colisão continuaria pequena mesmo com imagem maior
+                    platforms.create(400, 568, 'ground').setScale(2).refreshBody().setDepth(1);
+
+                    //criam outras plataformas (como degraus, prateleiras, etc)
+                    // elas não se movem, só servem como "piso" que personagem pode pisar   
+                    platforms.create(600, 400, 'ground');
+                    platforms.create(50, 250, 'ground');
+                    platforms.create(750, 220, 'ground');        
+                }
+
+                function mapaMontanha(scene) {
+                    scene.add.image(400, 300, 'montanha');
+
+                    platforms = scene.physics.add.staticGroup();
+
+                    platforms.create(400, 568, 'montanha-chao').setScale(2).refreshBody().setDepth(1);
+
+                    platforms.create(-100, 300, 'montanha-chao'); 
+                    platforms.create(900, 300, 'montanha-chao'); 
+                    platforms.create(400, 150, 'montanha-chao'); 
+                    platforms.create(400, 420, 'montanha-chao');    
+                }
+
+                function mapaNoite(scene) {
+                    scene.add.image(400, 300, 'noite');
+
+                    platforms = scene.physics.add.staticGroup();
+        
+                    platforms.create(400, 568, 'noite-chao').setScale(2).refreshBody().setDepth(1);
+
+                    platforms.create(400, 420, 'noite-chao');
+                    platforms.create(150, 290, 'noite-chao-pequeno');
+                    platforms.create(650, 290, 'noite-chao-pequeno');
+                    platforms.create(400, 150, 'noite-chao-pequeno');             
+                }
+
+                function mapaDeserto(scene) {
+                    scene.add.image(400, 300, 'desertoD');
+
+                    platforms = scene.physics.add.staticGroup();
+
+                    platforms.create(400, 568, 'deserto-chao').setScale(2).refreshBody().setDepth(1);
+                    
+                    platforms.create(398, 336, 'deserto-parede');
+                    platforms.create(298, 340, 'deserto-chaozinho');
+                    platforms.create(20, 450, 'deserto-chaozinho').setDepth(1);
+                    platforms.create(20, 250, 'deserto-chaozinho');             
+                    platforms.create(498, 340, 'deserto-chaozinho');
+                    platforms.create(780, 450, 'deserto-chaozinho');
+                    platforms.create(780, 250, 'deserto-chaozinho');               
+                }
+
+                //Monta a cena do jogo: fundo, plataformas, grupos com física, objetos.
+                function create() 
+                {
+                    camera = this.cameras.add();
+                    camera.backgroundColor = new Phaser.Display.Color(100, 100, 100, 255);        
+                    
+                    if (fase === 0) 
+                    { 
+                        mapaPadrao(this);
+                        scoreTextObjective = this.add.text(150, 50, 'fase 1:  240', { fontSize: '20px', fontFamily: 'bungee spice' }); 
+                        scoreTextObjective.setStroke('#fff', 5);
+                        scoreTextObjective.setPosition(10, 10);
+                    }
+                    else if (fase === 1) 
+                    { 
+                        mapaMontanha(this);
+                        scoreTextObjective = this.add.text(150, 50, 'fase 2:  360', { fontSize: '25px', fontFamily: 'bungee spice' }); 
+                        scoreTextObjective.setPosition(10, 10);
+                    }
+                    else if (fase === 2) 
+                    {
+                        mapaNoite(this);
+                        scoreTextObjective = this.add.text(150, 50, 'fase 3:  480', { fontSize: '20px', fontFamily: 'bungee spice' }); 
+                        scoreTextObjective.setPosition(10, 10);
+                    }
+                    else if (fase === 3) 
+                    {
+                        mapaDeserto(this);
+                        scoreTextObjective = this.add.text(150, 50, 'fase 4:  600', { fontSize: '20px', fontFamily: 'bungee spice' }); 
+                        scoreTextObjective.setPosition(10, 10);
+                    };
+                        
+                    // this.physics.add.sprite(...) = cria um sprite com física (ele vai cair, colidir, etc)
+                    player = this.physics.add.sprite(60, 450, 'dude');
+
+                    // Vai quicar quando tocar no chao (como uma bolinha)
+                    // 0 = nao quica
+                    // 1 = quica muito
+                    // 0.2 leve quicada
+                    player.setBounce(0.2);
+
+                    //Impede que fuja da tela. Nao pode ultrapassar os limites da tela do jogo
+                    player.setCollideWorldBounds(true);
+
+                    //this.anims.create() = serve para criar animações com os sprites carregados
+                    this.anims.create ({
+
+                        //andar a esquerda
+                        key: 'left',
+                        //frames 0 a 3 sao os quadros usados dessa animação
+                        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+                        //mostra 10 quadros por segundo
+                        frameRate: 10,
+                        //repete para sempre enquanto estiver andando 
+                        repeat: -1 
+
+                    });
+
+                    this.anims.create ({
+
+                        //animação quando o personagem está parado
+                        key: 'turn',
+                        //mostra apenas o frame 4
+                        frames: [ { key: 'dude', frame: 4 } ],
+                        //nesse caso nao importa muito pq so tem um quadrado
+                        frameRate: 20
+
+                    });
+
+                    this.anims.create ({
+
+                        //quando anda para a direita
+                        key: 'right',
+                        // usa os frames 5 até o 8 do spritesheet 'dude'
+                        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+                        frameRate: 10,
+                        repeat: -1
+
+                    });
+
+                    // cria controle de setinhas do teclado
+                    // como dizer: "Phaser, me dá acesso ao teclado do jogados, especialmente as setas"
+                    // createCursorKeys - ativa setinhas do teclado
+                    cursors = this.input.keyboard.createCursorKeys();
+
+                    stars = this.physics.add.group ({
+
+                        key: 'star',
+                        repeat: 11,
+                        setXY: { x: 12, y: 0, stepX: 70 }
+
+                    });
+
+                    stars.children.iterate(function (child) {
+
+                        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+
+                    });
+
+                    bombs = this.physics.add.group(); // cria um grupo dinamico de bombas
+
+                    //Contagem SCORE
+                    scoreText = this.add.text(50, 600, '0', { fontFamily: 'bungee spice', fontSize: '35px' }); 
+                    
+                    scoreText.setShadowStroke(5);
+                    scoreText.setOrigin(0.5, 0.5);
+                    scoreText.setPosition(400, 20);
+
+                    //para colidir
+                    //this.physics = sistema de física do phaser. 
+                    //this = cena do jogo
+                    //.add.collider(...) = adiciona colisão física entre dois objetos
+                    //(plyer, platforms) = entre eles
+                    this.physics.add.collider(player, platforms);
+                    this.physics.add.collider(stars, platforms);
+                    this.physics.add.collider(bombs, platforms);
+
+                    //this.physics.add.overlap(...) = adiciona uma verificação de contato entre doi elementos. aqui os objetos se sobrepõem(podem se atravessar)
+                    //collecStar = função que sera chamada automaticamente quando o jogador encostar em uma estrela
+                    //null = poderia ser uma função 'condição' para controlar quando isso acontecer
+                    //this = indica que a funsao esta dentro do contexto da cena do Phaser (senão pode dar erro)
+                    this.physics.add.overlap(player, stars, collectStar, null, this);
+
+                    //se o player encostar numa bomba chama a função hipBomb
+                    this.physics.add.collider(player, bombs, hitBomb, null, this);  
+                
+                    nameText = this.add.text(50, 440, namePlayer, { fontSize: '12px', fill: '#000' });
+                    nameText.setOrigin(0.5, 0.5);
+                    
+                    // Botão de PAUSE
+                    pauseButton = this.add.image(770, 20, 'pausar').setInteractive();
+                    pauseButton.setOrigin(0.5, 0.5);
+                    pauseButton.on('pointerdown', () => {
+                        this.physics.pause();
+                        menuFundo.setVisible(true);
+                        menuDespause.setVisible(true);
+                        menuCasa.setVisible(true);
+                        menuPauseText.setVisible(true);
+                    });
+
+                    //imagem de fundo do pause
+                    menuFundo = this.add.image(100, 100, 'menuFundo');
+                    menuFundo.setOrigin(0.5, 0.5);
+                    menuFundo.setPosition(400, 300);
+                    menuFundo.setVisible(false);
+
+                    //pause texto
+                    menuPauseText = this.add.text(400, 500, 'PAUSE', { fontSize: '90px',fontFamily: 'bungee spice', });
+                    menuPauseText.setOrigin(0.5, 0.5);
+                    menuPauseText.setPosition(400, 220);
+                    menuPauseText.setVisible(false);
+
+                    // botao de retornar para o inicio 
+                    menuCasa = this.add.image(400, 600, 'menuCasa').setInteractive();
+                    menuCasa.setOrigin(0.5, 0.5);
+                    menuCasa.setPosition(455, 350);
+                    menuCasa.setVisible(false);
+                    menuCasa.on('pointerdown', () => {
+                        location.reload();
+                    });
+                    
+                    //botao de despausar 
+                    menuDespause = this.add.image(400, 600, 'despause').setInteractive();
+                    menuDespause.setOrigin(0.5, 0.5);
+                    menuDespause.setPosition(345, 350);
+                    menuDespause.setVisible(false);
+                    menuDespause.on('pointerdown', () => {
+                       this.physics.resume();
+                       menuDespause.setVisible(false);
+                       menuFundo.setVisible(false);
+                       menuPauseText.setVisible(false);
+                       menuCasa.setVisible(false);
+                    });
+
+                    //Botão de REINICIAR
+                    restarButton = this.add.image(145, 45, 'reiniciar').setInteractive();
+                    restarButton.setOrigin(0.5, 0.5);
+                    restarButton.setVisible(false);
+                    restarButton.setPosition(this.cameras.main.centerX, this.cameras.main.centerY + 50);
+                    restarButton.on('pointerdown', () => {
+                        this.scene.restart();
+                        gameOver = false;
+                    });
+                }
+
+                //Executa em loop infinito, onde você colocará lógicas do jogo.
+                function update() 
+                {
+                    //isDown = detecta se está pressionado
+                    //setVelocityX = move para os lados
+                    //setVelocityY = faz pular
+                    //anims.play() = toca animação certa
+                    //body.touching.down = verifica se está tocando no chão
+
+                    //verifica se a seta esquerda está sendo pressionada.
+                    if (cursors.left.isDown) 
+                    {
+                        //setVelocityX(-600) = move para esquerda (número negativo = esquerda)
+                        player.setVelocityX(-400);
+                        //mostra animação de caminhar para esquerda 
+                        player.anims.play('left', true);
+                    } 
+                    else if (cursors.right.isDown) 
+                    {
+                        player.setVelocityX(400);
+                        player.anims.play('right', true);
+                    }
+                    else
+                    {
+                        //para o movimento 
+                        player.setVelocityX(0);
+                        // toca a animação de ficar parado
+                         player.anims.play('turn');   
+                    };
+
+                    //pulo
+                    //cursors.up.isDown = seta pra cima foi precionada
+                    //player.body.touching.down = verifica se esta no chão (só pode pular se estiver no chão)
+                    if (cursors.up.isDown && player.body.touching.down)
+                    {                        
+                        //faz o personagem subir (movimenta pra cima = valor negativo no eixo Y)
+                        player.setVelocityY(-600);                 
+                    };
+
+                    nameText.setPosition(player.x, player.y - 30);  
+
+                    if (fase === 0 && score === 240) 
+                    {
+                        this.scene.restart();               
+                        score = 0;
+                        fase = 1;    ;                                                                 
+                    } 
+                    else if (fase === 1 && score === 360) 
+                    {
+                        this.scene.restart();
+                        score = 0;
+                        fase = 2;         
+                    } 
+                    else if (fase === 2 && score === 480) 
+                    {
+                        this.scene.restart();
+                        score = 0;
+                        fase = 3;
+                    }
+                    else if (fase === 3 && score === 600) 
+                    {
+                        this.scene.restart();
+                        score = 0;
+                        location.reload();
+                    };   
+                }
+
+                function collectStar (player, star) 
+                {
+                    // ° desativa a estrela no jogo (tira a física e da tela)
+                    // ° primeiro true = desativa o corpo físico (ela nao interage mais)
+                    // ° segundo true = faz ela desaparecer da tela
+                    star.disableBody(true, true);
+
+                    score += 10;
+                    scoreText.setText(score);
+
+                    // countActive(true) = devolve quantas estrelas ainda estão “ativas/visíveis”.
+                    // Quando chega a 0, você reabilita todas as estrelas (elas caem de novo).
+                    if (stars.countActive(true) === 0) 
+                    {
+                        //percorre cada estrela e a reativa no topo
+                        stars.children.iterate(function (child) 
+                        {
+                            child.enableBody(true, child.x, 0, true, true);
+                        });
+
+                        // se o player estiver na metade esquerda (<400), cria bomba á direita, senão á esquerda
+                        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+                        // bombs.create(x, y, 'bomb') = adiciona uma nova bomba no grupo na posição (x,16)
+                        // setBounce(1) = faz a bomba quicar sem perder energia.
+                        // allowGravity = false mantém a bomba no ar (ela só se move pelo setVelocity).
+                        var bomb = bombs.create(x, 16, 'bomb');
+                        bomb.setBounce(1); // quica 100%
+                        bomb.setCollideWorldBounds(true); // nao sai da tela
+                        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20); // velocidade x aelatória, y = 20
+                        bomb.allowGravity = false; // não sofre gravidade
+                    };
+                }
+
+                function hitBomb (player, bomb) 
+                {
+                    restarButton.setVisible(true);
+
+                    player.setTint(0xff0000); // pinta o player de vermelho
+
+                    player.anims.play('turn'); // animação parada
+          
+                    imageGameOver = this.add.image(410, 250, 'over');
+                    imageGameOver.setPosition(this.cameras.main.centerX, this.cameras.main.centerY - 50);
+
+                    gameOver = true; // flag de fim de jogo
+
+                    score = 0;
+
+                    this.physics.pause(); // congela tudo          
+                }     
+            }
+        }       
+    </script>
+</body>
+</html>
